@@ -1,0 +1,36 @@
+{
+  "name": "dinvio-widget",
+  "version": "0.0.0",
+  "description": "Dinvio E-commerce Cart Delivery Widget",
+  "dependencies": {},
+  "devDependencies": {
+    "br-jquery": "0.0.3",
+    "browserify": "^10.2.1",
+    "browserify-shim": "^3.8.6",
+    "gulp": "^3.8.11",
+    "gulp-util": "^3.0.4",
+    "jasmine": "^2.3.1",
+    "lodash": "^3.9.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dinvio/dinvio-widget.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Dinvio, LLC",
+    "url": "http://dinvio.ru/"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  }
+}
