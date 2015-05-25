@@ -1,11 +1,35 @@
 'use strict';
 
-var $ = require('jquery');
-var Dinvio = require('./dinvio_ns');
+require('es5-shim');
 
-function Widget() {
-    console.log('Yarrr!');
+var $ = require('jquery');
+var DEFAULTS = require('./defaults');
+var Settings = require('./settings');
+
+var Dinvio = {};
+
+var initialized = false;
+
+Dinvio.init = function(settings) {
+    if (typeof $ !== 'function') {
+        throw ReferenceError('jQuery should be loaded');
+    }
+    this.settings = new Settings(this, DEFAULTS, settings);
+
+    if (!this.settings.get('publicKey')) {
+        throw Error('No publicKey provided in Dinvio.init(...)');
+    }
+};
+
+Dinvio.is_initialized = function() {
+    return initialized;
+};
+
+
+function initialize() {
+
 }
 
-Dinvio.Widget = Widget;
-module.exports = Widget;
+
+global.Dinvio = Dinvio;
+module.exports = Dinvio;

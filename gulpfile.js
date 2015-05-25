@@ -5,9 +5,17 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
-
+var exorcist = require('exorcist');
 var watchify = require('watchify');
 var browserify = require('browserify');
+
+
+function bundleJS(b) {
+    return b.bundle()
+        .pipe(exorcist('./build/js/dinvio.js.map'))
+        .pipe(source('dinvio.js'))
+        .pipe(gulp.dest('./build/js'));
+}
 
 
 function browserifyJS(watch, debug) {
@@ -19,6 +27,7 @@ function browserifyJS(watch, debug) {
         debug: !!debug
     }));
     b.on('log', gutil.log);
+    b.on('error', gutil.log.bind(gutil, 'Browserify Error'));
     if (watch) {
         b = watchify(b);
         b.on('update', function() {
@@ -28,12 +37,6 @@ function browserifyJS(watch, debug) {
     bundleJS(b);
 }
 
-function bundleJS(b) {
-    return b.bundle()
-        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-        .pipe(source('widget.js'))
-        .pipe(gulp.dest('./build/js'));
-}
 
 gulp.task('watch-js', function() {
     browserifyJS(true, true);
