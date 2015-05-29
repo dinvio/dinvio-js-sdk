@@ -1,0 +1,4 @@
+[submodule "vendor/suggestions-jquery"]
+	path = vendor/suggestions-jquery
+	url = https://github.com/hflabs/suggestions-jquery.git
+	branch = 15.5

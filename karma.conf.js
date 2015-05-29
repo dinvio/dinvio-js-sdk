@@ -3,7 +3,7 @@
 
 module.exports = function(config) {
     config.set({
-        frameworks: ['source-map-support', 'jasmine-jquery', 'jasmine'],
+        frameworks: ['source-map-support', 'sinon', 'jasmine-jquery', 'jasmine'],
         files: [
             'build/js/**/*.js',
             'test/**/*.js',

@@ -10,8 +10,18 @@ describe("Dinvio.init", function() {
     'use strict';
 
     var publicKey = 'test_key';
+    var server;
 
-    it('should be function', function() {
+    beforeEach(function() {
+        server = sinon.fakeServer.create();
+    });
+
+    afterEach(function() {
+        server.restore();
+        Dinvio.reset();
+    });
+
+    it('should be a function', function() {
         expect(typeof Dinvio.init).toBe('function');
     });
 
@@ -54,7 +64,67 @@ describe("Dinvio.init", function() {
         expect(warnSpy).toHaveBeenCalled();
     });
 
-    it('should make request to config method', function() {
+    describe('configuration request', function() {
 
-    });
+        it('should make GET request to config method', function() {
+            Dinvio.init({
+                publicKey: publicKey
+            });
+            expect(server.requests.length).toBe(1);
+            expect(server.requests[0].method).toBe('GET');
+            expect(server.requests[0].url).toBe('https://dinvio.ru/api/v1/js/?public=test_key');
+        });
+
+        describe('with good response', function() {
+            var callbackSpy;
+            beforeEach(function() {
+                callbackSpy = jasmine.createSpy('callback');
+                server.respondWith('GET', 'https://dinvio.ru/api/v1/js/?public=test_key',
+                    [200, { 'Content-Type': 'application/json'}, '{}']
+                );
+            });
+
+            it('should set initialized flag', function() {
+                expect(Dinvio.is_initialized()).toBeFalsy();
+                Dinvio.init({
+                    publicKey: publicKey
+                });
+                server.respond();
+                expect(Dinvio.is_initialized()).toBeTruthy();
+            });
+            it('should invoke callback method', function() {
+                Dinvio.init({
+                    publicKey: publicKey
+                }, callbackSpy);
+                server.respond();
+                expect(callbackSpy.calls.count()).toBe(1);
+            });
+            it('should emit initialize event', function() {
+                Dinvio.on('initialize', callbackSpy);
+                Dinvio.init({
+                    publicKey: publicKey
+                });
+                server.respond();
+                expect(callbackSpy.calls.count()).toBe(1);
+            });
+        });
+        describe('with bad response', function() {
+            var callbackSpy;
+            beforeEach(function () {
+                callbackSpy = jasmine.createSpy('callback');
+                server.respondWith('GET', 'https://dinvio.ru/api/v1/js/?public=test_key',
+                    [500, {'Content-Type': 'application/json'}, '{}']
+                );
+            });
+
+            it('should not set initialized flag', function () {
+                expect(Dinvio.is_initialized()).toBeFalsy();
+                Dinvio.init({
+                    publicKey: publicKey
+                });
+                server.respond();
+                expect(Dinvio.is_initialized()).toBeFalsy();
+            });
+        });
+    })
 });

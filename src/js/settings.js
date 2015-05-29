@@ -1,3 +1,4 @@
+
 'use strict';
 
 var ALLOWED_KEYS = ['apiUrl', 'version', 'publicKey'];
