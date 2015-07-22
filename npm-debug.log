@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/bin/npm', 'run', 'watch' ]
+2 info using npm@2.13.1
+3 info using node@v0.12.7
+4 verbose run-script [ 'prewatch', 'watch', 'postwatch' ]
+5 info prewatch dinvio-js-sdk@0.0.0
+6 info watch dinvio-js-sdk@0.0.0
+7 verbose unsafe-perm in lifecycle true
+8 info dinvio-js-sdk@0.0.0 Failed to exec watch script
+9 verbose stack Error: dinvio-js-sdk@0.0.0 watch: `karmat start`
+9 verbose stack spawn ENOENT
+9 verbose stack     at ChildProcess.<anonymous> (/usr/lib/node_modules/npm/lib/utils/spawn.js:17:16)
+9 verbose stack     at ChildProcess.emit (events.js:110:17)
+9 verbose stack     at maybeClose (child_process.js:1015:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1087:5)
+10 verbose pkgid dinvio-js-sdk@0.0.0
+11 verbose cwd /home/alex/Projects/dinvio-js-sdk
+12 error Linux 4.1.2-2-ARCH
+13 error argv "node" "/usr/bin/npm" "run" "watch"
+14 error node v0.12.7
+15 error npm  v2.13.1
+16 error file sh
+17 error code ELIFECYCLE
+18 error errno ENOENT
+19 error syscall spawn
+20 error dinvio-js-sdk@0.0.0 watch: `karmat start`
+20 error spawn ENOENT
+21 error Failed at the dinvio-js-sdk@0.0.0 watch script 'karmat start'.
+21 error This is most likely a problem with the dinvio-js-sdk package,
+21 error not with npm itself.
+21 error Tell the author that this fails on your system:
+21 error     karmat start
+21 error You can get their info via:
+21 error     npm owner ls dinvio-js-sdk
+21 error There is likely additional logging output above.
+22 verbose exit [ 1, true ]

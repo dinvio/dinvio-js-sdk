@@ -1,0 +1,5 @@
+{
+  "name": "Calculator",
+  "private": true,
+  "main": "./index.js"
+}
