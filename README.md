@@ -1,2 +1,3 @@
-# dinvio-widget
-Dinvio E-commerce Cart Delivery Widget
+# Dinvio JS SDK
+Please see tests for documentation
+
