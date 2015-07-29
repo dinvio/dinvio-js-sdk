@@ -107,9 +107,21 @@ describe('Calculator', function() {
             var promise = calculator.calc(dest, packages);
             expect(calculator.requests.deferred).toHaveBeenCalledWith('price', {
                 destination: dest,
-                packages: packages
+                packages: packages,
+                total_cost: 0
             });
             expect(Q.isPromise(promise)).toBeTruthy();
-        })
+        });
+
+        it('should accept `totalCost` as third argument as float', function() {
+            spyOn(calculator.requests, 'deferred').and.callThrough();
+            var promise = calculator.calc(dest, packages, 234.5);
+            expect(calculator.requests.deferred).toHaveBeenCalledWith('price', {
+                destination: dest,
+                packages: packages,
+                total_cost: 234.5
+            });
+            expect(Q.isPromise(promise)).toBeTruthy();
+        });
     });
 });

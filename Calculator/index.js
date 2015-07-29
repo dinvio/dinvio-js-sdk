@@ -68,16 +68,22 @@ function cleanPackages(packages) {
 
 /**
  * Calculate packages delivery cost for destination
- * @param destination
- * @param packages
+ * @param {String} destination
+ * @param {Array} packages
+ * @param {Number} [totalCost]
  * @returns {Object|Promise} Promise object
  */
-Calculator.prototype.calc = function(destination, packages) {
+Calculator.prototype.calc = function(destination, packages, totalCost) {
     destination = cleanDestination(destination);
     packages = cleanPackages(packages);
+    totalCost = parseFloat(totalCost);
+    if (!(totalCost > 0)) {
+        totalCost = 0
+    }
     return this.requests.deferred(endpoint, {
         destination: destination,
-        packages: packages
+        packages: packages,
+        total_cost: totalCost
     });
 
 };
