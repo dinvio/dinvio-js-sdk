@@ -8,6 +8,10 @@ describe('Calculator', function() {
 
     var calculator;
 
+    function fakeDeferred() {
+        return Q.defer().promise;
+    }
+
     beforeEach(function() {
         calculator = new Calculator({
             publicKey: 'some key'
@@ -114,12 +118,23 @@ describe('Calculator', function() {
         });
 
         it('should accept `totalCost` as third argument as float', function() {
-            spyOn(calculator.requests, 'deferred').and.callThrough();
+            spyOn(calculator.requests, 'deferred').and.callFake(fakeDeferred);
             var promise = calculator.calc(dest, packages, 234.5);
             expect(calculator.requests.deferred).toHaveBeenCalledWith('price', {
                 destination: dest,
                 packages: packages,
                 total_cost: 234.5
+            });
+            expect(Q.isPromise(promise)).toBeTruthy();
+        });
+    });
+
+    describe('`calcOrderId` method', function() {
+        it('should make deferred request to `price` endpoint and returns promise', function() {
+            spyOn(calculator.requests, 'deferred').and.callFake(fakeDeferred);
+            var promise = calculator.calcOrderId('999-000-000-001');
+            expect(calculator.requests.deferred).toHaveBeenCalledWith('price', {
+                'order_id': '999-000-000-001'
             });
             expect(Q.isPromise(promise)).toBeTruthy();
         });

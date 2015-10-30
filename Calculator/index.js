@@ -88,4 +88,16 @@ Calculator.prototype.calc = function(destination, packages, totalCost) {
 
 };
 
+
+/**
+ * Calculate predefined order in Dinvio system
+ * @param {String} orderId
+ * @returns {Object|Promise} Promise object
+ */
+Calculator.prototype.calcOrderId = function(orderId) {
+    return this.requests.deferred(endpoint, {
+        'order_id': orderId
+    });
+};
+
 module.exports = Calculator;
